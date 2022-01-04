@@ -34,6 +34,14 @@ class Query(graphene.ObjectType):
 
     user_by_id = graphene.Field(UserType, id=graphene.Int(required=True))
 
+    todoes_by_user_username = graphene.List(TodoType, username=graphene.String(required=False))
+
+    def resolve_todoes_by_user_username(self, info, username=None):
+        todoes = ToDo.objects.all()
+        if username:
+            todoes = todoes.filter(user_id__username=username)
+        return todoes
+
     def resolve_user_by_id(self, info, id):
         try:
             return User.objects.get(id=id)
