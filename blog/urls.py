@@ -16,6 +16,8 @@ from mainapp.views import TodoModelViewSet, UserCustomViewSet, \
     ProjectLimitOffsetPaginatonViewSet, \
     UserLimitOffsetPaginatonViewSet, TodoLimitOffsetPaginatonViewSet
 
+from userapp.views import UserListAPIView
+
 # ArticleModelViewSet,  ArticleCustomViewSet,  \
 # ArticleViewSet,\
 # ArticleQuerysetFilterViewSet, ArticleParamFilterViewSet, \
@@ -24,7 +26,6 @@ from mainapp.views import TodoModelViewSet, UserCustomViewSet, \
 # ArticleAPIVIew, article_view, \
 # ArticleCreateAPIView, ArticleListAPIView, \
 # ArticleRetrieveAPIView, ArticleDestroyAPIView, ArticleUpdateAPIView, ArticleKwargsFilterView
-from userapp.views import UserListAPIView
 
 router = DefaultRouter()
 # # router.register('base_model_article', ArticleModelViewSet)
@@ -56,6 +57,7 @@ pagination_router.register('pagination_project', ProjectLimitOffsetPaginatonView
 pagination_router.register('pagination_user', UserLimitOffsetPaginatonViewSet)
 pagination_router.register('pagination_todo', TodoLimitOffsetPaginatonViewSet)
 
+# for path('swagger/, ... и path('redoc/', ...
 schema_view = get_schema_view(
     openapi.Info(
         title="Blog",

@@ -3,6 +3,7 @@ from graphene_django import DjangoObjectType
 from django.contrib.auth.models import User
 from mainapp.models import Project, ToDo
 
+
 # class Query(graphene.ObjectType):
 #     hello = graphene.String(default_value="Hi!")
 #
@@ -58,4 +59,26 @@ class Query(graphene.ObjectType):
         return User.objects.all()
 
 
-schema = graphene.Schema(query=Query)
+
+
+class UserMutation(graphene.Mutation):
+    class Arguments:
+        username = graphene.String(required=True)
+        id = graphene.ID()
+
+    user_field = graphene.Field(UserType)
+
+    @classmethod
+    def mutate(cls, root, info, username, id):
+        user = User.objects.get(pk=id)
+        user.username = username
+        user.save()
+        return UserMutation(user_field=user)
+
+
+class Mutation(graphene.ObjectType):
+    update_user = UserMutation.Field()
+
+
+
+schema = graphene.Schema(query=Query,  mutation=Mutation)
