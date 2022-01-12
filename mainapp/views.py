@@ -139,7 +139,7 @@ class UserViewSet(viewsets.ViewSet):
         return Response(serializer.data)
 
     def create(self, request, *args, **kwargs):
-        user = User.objects.create(username=request.data)
+        user = User.objects.create(username=request.data, *args, **kwargs)
         serializer = UserModelSerializer(user, data=request.data, partial=True)
         serializer.is_valid(raise_exception=True)
         serializer.save()
@@ -168,6 +168,7 @@ class TodoViewSet(viewsets.ViewSet):
     serializer_class = ToDoModelSerializer
     queryset = ToDo.objects.all()
 
+
     def list(self, request):
         todoes = ToDo.objects.all()
         serializer = ToDoModelSerializer(todoes, many=True)
@@ -187,7 +188,7 @@ class TodoViewSet(viewsets.ViewSet):
         return Response(status=status.HTTP_204_NO_CONTENT)
 
     def create(self, request, *args, **kwargs):
-        todo = ToDo.objects.create(request.data)
+        todo = ToDo.objects.create(request.data, *args, **kwargs)
         serializer = ToDoModelSerializer(todo, data=request.data, partial=True)
         serializer.is_valid(raise_exception=True)
         serializer.save()
